@@ -1,9 +1,7 @@
-<mat-sidenav-container class="example-container" [hasBackdrop]="hasBackdrop">
+<mat-sidenav-container [hasBackdrop]="hasBackdrop">
   <mat-sidenav #sidenav [mode]="mode" [position]="position" [opened]="opened">
     <p><button mat-button (click)="sidenav.toggle()">Toggle</button></p>
-    <p>
-      <label>Test input for drawer<input/></label>
-    </p>
+    <app-thumbnail-list-container></app-thumbnail-list-container>
   </mat-sidenav>
 
   <mat-sidenav-content>
