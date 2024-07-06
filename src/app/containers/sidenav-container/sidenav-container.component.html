@@ -1,0 +1,19 @@
+<mat-sidenav-container class="example-container" [hasBackdrop]="hasBackdrop">
+  <mat-sidenav #sidenav [mode]="mode" [position]="position" [opened]="opened">
+    <p><button mat-button (click)="sidenav.toggle()">Toggle</button></p>
+    <p>
+      <label>Test input for drawer<input/></label>
+    </p>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <p><button mat-button (click)="sidenav.toggle()">Toggle</button></p>
+    <p>
+
+
+    </p>
+    <p>
+      <label>Test input for drawer content<input/></label>
+    </p>
+  </mat-sidenav-content>
+</mat-sidenav-container>
