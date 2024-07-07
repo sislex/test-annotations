@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import {MatDrawerMode,  MatSidenavModule} from '@angular/material/sidenav';
+import {Component, ViewChild} from '@angular/core';
+import {MatDrawerMode, MatSidenav, MatSidenavModule} from '@angular/material/sidenav';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatButtonModule} from '@angular/material/button';
 import {ConfigurableFocusTrapFactory, FocusTrapFactory} from '@angular/cdk/a11y';
@@ -14,6 +14,12 @@ import {ThumbnailListContainerComponent} from '../thumbnail-list-container/thumb
   styleUrl: './sidenav-container.component.scss'
 })
 export class SidenavContainerComponent {
+  @ViewChild(MatSidenav) sidenav!: MatSidenav;
+
+  toggle() {
+    this.sidenav.toggle();
+  }
+
   opened = true;
   mode: MatDrawerMode = 'side';
   position: 'start' | 'end' = 'start';

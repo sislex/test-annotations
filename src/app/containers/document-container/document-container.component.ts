@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {DocumentLayoutComponent} from '../../layouts/document-layout/document-layout.component';
 import {ToolbarComponent} from '../../components/toolbar/toolbar.component';
 import {SidenavContainerComponent} from '../sidenav-container/sidenav-container.component';
@@ -15,5 +15,9 @@ import {SidenavContainerComponent} from '../sidenav-container/sidenav-container.
   styleUrl: './document-container.component.scss'
 })
 export class DocumentContainerComponent {
+  @ViewChild('sidenav') sidenav!: SidenavContainerComponent;
 
+  onToggleSidenav() {
+    this.sidenav.toggle();
+  }
 }
