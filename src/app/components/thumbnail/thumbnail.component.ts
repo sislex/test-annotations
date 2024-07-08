@@ -1,4 +1,5 @@
 import {Component, Input} from '@angular/core';
+import {IPage} from "../../+state/document/document.reducer";
 
 @Component({
   selector: 'app-thumbnail',
@@ -8,7 +9,5 @@ import {Component, Input} from '@angular/core';
   styleUrl: './thumbnail.component.scss'
 })
 export class ThumbnailComponent {
-  @Input() src!: string;
-  @Input() number!: number;
-
+  @Input() page!: IPage;
 }

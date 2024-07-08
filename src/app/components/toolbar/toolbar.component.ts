@@ -3,8 +3,6 @@ import {MatToolbar} from '@angular/material/toolbar';
 import {MatIcon} from '@angular/material/icon';
 import {MatIconButton} from '@angular/material/button';
 import {FormsModule} from '@angular/forms';
-import {pageListSize} from "../../+state/view/view.selectors";
-import {Store} from "@ngrx/store";
 import {AsyncPipe} from "@angular/common";
 
 @Component({
@@ -23,10 +21,10 @@ import {AsyncPipe} from "@angular/common";
 export class ToolbarComponent {
   @Output() emitter = new EventEmitter();
   @Input() percentInputValue: number | null = 50;
+  @Input() title: string | null = '';
 
   firstInputValue: number = 1;
   stateString: number = 2;
-  documentName: string = 'doc.pdf';
 
   increment() {
     this.emitter.emit({
@@ -41,6 +39,8 @@ export class ToolbarComponent {
   }
 
   toggleSidenav() {
-
+    this.emitter.emit({
+      event: 'ToolbarComponent:MENU_ICON_CLICKED',
+    });
   }
 }

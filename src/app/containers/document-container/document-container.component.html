@@ -1,5 +1,9 @@
 <app-document-layout>
-  <app-toolbar [percentInputValue]="pageListSize$|async" (emitter)="events($event)" top></app-toolbar>
+  <app-toolbar
+    [percentInputValue]="pageListSize$|async"
+    [title]="(activeDocumentName$|async)"
+    (emitter)="events($event)" top>
+  </app-toolbar>
   <app-sidenav-container bottom></app-sidenav-container>
 </app-document-layout>
 

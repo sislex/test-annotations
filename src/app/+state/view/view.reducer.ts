@@ -1,7 +1,7 @@
 import {createReducer, on} from '@ngrx/store';
 import * as ViewActions from './view.actions'
 
-export const VIEW_FEATURE_KEY = 'commandsList';
+export const VIEW_FEATURE_KEY = 'view';
 
 export interface ViewState {
   isThumbnailListOpened: boolean;

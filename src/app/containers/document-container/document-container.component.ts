@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {DocumentLayoutComponent} from '../../layouts/document-layout/document-layout.component';
 import {ToolbarComponent} from '../../components/toolbar/toolbar.component';
 import {SidenavContainerComponent} from '../sidenav-container/sidenav-container.component';
@@ -6,8 +6,9 @@ import {Store} from "@ngrx/store";
 import {decreasePageListSize, increasePageListSize, toggleIsThumbnailListOpened} from "../../+state/view/view.actions";
 import {pageListSize} from "../../+state/view/view.selectors";
 import {AsyncPipe} from "@angular/common";
-import {ActivatedRoute, Router} from '@angular/router';
-import {HttpClient} from '@angular/common/http';
+import {ActivatedRoute} from '@angular/router';
+import {loadDocument} from "../../+state/document/document.actions";
+import {getActiveDocumentName} from "../../+state/document/document.selectors";
 
 @Component({
   selector: 'app-document-container',
@@ -21,20 +22,23 @@ import {HttpClient} from '@angular/common/http';
   templateUrl: './document-container.component.html',
   styleUrl: './document-container.component.scss'
 })
-export class DocumentContainerComponent {
+export class DocumentContainerComponent implements OnInit {
 
+  activeDocumentName$ = this.store.select(getActiveDocumentName);
   pageListSize$ = this.store.select(pageListSize);
 
   constructor(
-    private readonly store: Store,
-    private route: ActivatedRoute,
-    private http: HttpClient,
+    private store: Store,
+    private route: ActivatedRoute
   ) {
+  }
+
+  ngOnInit() {
     this.route.paramMap.subscribe(params => {
-      const id = params.get('id'); // assuming 'id' is a route parameter
-      this.http.get(`http://localhost:4200/documents/${id}.json`).subscribe((response) => {
-        console.log('Document data:', response);
-      });
+      const id = params.get('id');
+      if (id) {
+        this.store.dispatch(loadDocument({ id }));
+      }
     });
   }
 

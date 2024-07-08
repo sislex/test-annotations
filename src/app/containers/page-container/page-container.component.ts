@@ -1,4 +1,5 @@
 import {Component, Input} from '@angular/core';
+import {IPage} from "../../+state/document/document.reducer";
 
 @Component({
   selector: 'app-page-container',
@@ -9,5 +10,5 @@ import {Component, Input} from '@angular/core';
   styleUrl: './page-container.component.scss'
 })
 export class PageContainerComponent {
-  @Input() page!: any;
+  @Input() page!: IPage;
 }
