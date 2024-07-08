@@ -1,3 +1,49 @@
 .example-spacer {
   flex: 1 1 auto;
 }
+mat-toolbar {
+  background-color: #323639;
+  color: white;
+  text-align: center;
+  font-size: 14px;
+
+  mat-icon {
+    color: white;
+  }
+
+  .separator {
+    text-align: center;
+    margin: 5px;
+  }
+
+  .vertical-line {
+    width: 1px;
+    height: 14px;
+    background-color: gray;
+    opacity: 0.5;
+    margin-left: 10px;
+  }
+
+  .butt-size {
+    opacity: 0.7;
+  }
+
+  .page-width-input {
+    width: 3ch;
+    text-align: center;
+    color: white;
+    border: none;
+    outline: none;
+    background-color: #212426;
+  }
+
+  .size-pages-width-input {
+    width: 5ch;
+    text-align: center;
+    color: white;
+    border: none;
+    outline: none;
+    background-color: #212426;
+  }
+}
+

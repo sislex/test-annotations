@@ -1,11 +1,9 @@
 <mat-sidenav-container [hasBackdrop]="hasBackdrop">
-  <mat-sidenav #sidenav [mode]="mode" [position]="position" [opened]="opened">
+  <mat-sidenav [mode]="mode" [position]="position" [opened]="isThumbnailListOpened$|async">
     <app-thumbnail-list-container></app-thumbnail-list-container>
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <p>
-      <label>Test input for drawer content<input/></label>
-    </p>
+    <app-page-list-container></app-page-list-container>
   </mat-sidenav-content>
 </mat-sidenav-container>
