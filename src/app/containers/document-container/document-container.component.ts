@@ -6,7 +6,8 @@ import {Store} from "@ngrx/store";
 import {decreasePageListSize, increasePageListSize, toggleIsThumbnailListOpened} from "../../+state/view/view.actions";
 import {pageListSize} from "../../+state/view/view.selectors";
 import {AsyncPipe} from "@angular/common";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from '@angular/router';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-document-container',
@@ -15,7 +16,7 @@ import {Router} from "@angular/router";
     DocumentLayoutComponent,
     ToolbarComponent,
     SidenavContainerComponent,
-    AsyncPipe
+    AsyncPipe,
   ],
   templateUrl: './document-container.component.html',
   styleUrl: './document-container.component.scss'
@@ -26,8 +27,16 @@ export class DocumentContainerComponent {
 
   constructor(
     private readonly store: Store,
-    protected router: Router,
-  ) {}
+    private route: ActivatedRoute,
+    private http: HttpClient,
+  ) {
+    this.route.paramMap.subscribe(params => {
+      const id = params.get('id'); // assuming 'id' is a route parameter
+      this.http.get(`http://localhost:4200/documents/${id}.json`).subscribe((response) => {
+        console.log('Document data:', response);
+      });
+    });
+  }
 
   events($event: any) {
     if ($event.event === 'ToolbarComponent:MENU_ICON_CLICKED') {
