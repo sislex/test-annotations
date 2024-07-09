@@ -52,13 +52,13 @@ export class DocumentContainerComponent implements OnInit {
 
   events($event: any) {
     if ($event.event === 'ToolbarComponent:MENU_ICON_CLICKED') {
-      this.store.dispatch(toggleIsThumbnailListOpened())
+      this.store.dispatch(toggleIsThumbnailListOpened());
     } else if ($event.event === 'ToolbarComponent:INCREMENT_CLICKED') {
-      this.store.dispatch(increasePageListSize())
+      this.store.dispatch(increasePageListSize());
     } else if ($event.event === 'ToolbarComponent:DECREMENT_CLICKED') {
-      this.store.dispatch(decreasePageListSize())
+      this.store.dispatch(decreasePageListSize());
     } else if ($event.event === 'ToolbarComponent:FIRST_INPUT_CHANGE') {
-      const parsedValue = Number.parseInt($event.data, 10); // Преобразуем $event.data в число
+      const parsedValue = Number.parseInt($event.data, 10);
       if (!isNaN(parsedValue)) {
         this.store.dispatch(setActivePage({activePageNumber: parsedValue}));
         scrollToElementPage('page-' + parsedValue.toString());
@@ -69,7 +69,7 @@ export class DocumentContainerComponent implements OnInit {
         this.store.dispatch(setSizePage({ pageSize: parsedValue }));
       }
     } else if ($event.event === 'ToolbarComponent:TOGGLE_EDIT_MODE') {
-      this.store.dispatch(toggleIsEditMode())
+      this.store.dispatch(toggleIsEditMode());
     }
   }
 

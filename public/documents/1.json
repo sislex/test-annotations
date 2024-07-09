@@ -3,7 +3,19 @@
   "pages": [
     {
       "number": 1,
-      "imageUrl": "https://img.freepik.com/free-photo/the-adorable-illustration-of-kittens-playing-in-the-forest-generative-ai_260559-483.jpg?size=338&ext=jpg&ga=GA1.1.2113030492.1720137600&semt=ais_user"
+      "imageUrl": "https://img.freepik.com/free-photo/the-adorable-illustration-of-kittens-playing-in-the-forest-generative-ai_260559-483.jpg?size=338&ext=jpg&ga=GA1.1.2113030492.1720137600&semt=ais_user",
+      "annotations": [
+        {
+          "type": "rectangle",
+          "config": {
+            "left": 10,
+            "top": 20,
+            "fill": "red",
+            "width": 10,
+            "height": 15
+          }
+        }
+      ]
     },
     {
       "number": 2,

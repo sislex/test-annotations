@@ -6,6 +6,7 @@ export const DOCUMENT_FEATURE_KEY = 'document';
 export interface IPage {
   number: number;
   imageUrl: string;
+  annotations?: any[];
 }
 
 export interface IDocument {

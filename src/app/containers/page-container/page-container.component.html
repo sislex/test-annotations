@@ -1,3 +1,4 @@
 <div id="page-{{page.number}}" class="page" [ngStyle]="{ 'width': (width$ | async) + '%'}">
   <img [src]="page.imageUrl"/>
+  <app-annotations-container [page]="page"></app-annotations-container>
 </div>
