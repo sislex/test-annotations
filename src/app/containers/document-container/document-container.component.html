@@ -4,6 +4,7 @@
     [title]="(activeDocumentName$|async)"
     [totalPages]="totalPages$|async"
     [activePage]="activePage$|async"
+    [isEditMode]="getIsEditMode$|async"
     (emitter)="events($event)" top>
   </app-toolbar>
   <app-sidenav-container bottom></app-sidenav-container>

@@ -6,16 +6,23 @@
   box-sizing: border-box;
   padding-top: 8px;
 
+
   .thumbnail {
     width: 50%;
     border: 6px solid #323639;
+    cursor: pointer;
 
     img {
       width: 100%;
+      margin-bottom: -6px;
+    }
+
+    &.selected {
+      border: 6px solid #8ab4f8;
     }
   }
 
-  .thumbnail.selected {
-    border: 6px solid #8ab4f8;
+  .number {
+    cursor: pointer;
   }
 }

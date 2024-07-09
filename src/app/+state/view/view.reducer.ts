@@ -6,6 +6,8 @@ export const VIEW_FEATURE_KEY = 'view';
 export interface ViewState {
   isThumbnailListOpened: boolean;
   pageListSize: number;
+  startScrollTimestamp: number;
+  isEditMode: boolean;
 }
 
 export interface CommandsListPartialState {
@@ -15,6 +17,8 @@ export interface CommandsListPartialState {
 export const initialState: ViewState = {
   isThumbnailListOpened: true,
   pageListSize: 50,
+  startScrollTimestamp: 0,
+  isEditMode: false,
 };
 
 export const viewReducer = createReducer(
@@ -42,6 +46,14 @@ export const viewReducer = createReducer(
   }),
   on(ViewActions.setSizePage, (state, { pageSize }) => ({
     ...state,
-    pageListSize: pageSize
+    pageListSize: pageSize,
+  })),
+  on(ViewActions.setStartScrollTimestamp, (state) => ({
+    ...state,
+    startScrollTimestamp: new Date().getTime(),
+  })),
+  on(ViewActions.toggleIsEditMode, (state) => ({
+    ...state,
+    isEditMode: !state.isEditMode,
   })),
 );

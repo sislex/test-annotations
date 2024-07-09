@@ -21,11 +21,8 @@
     <mat-icon class="butt-size">add</mat-icon>
   </button>
   <span class="example-spacer"></span>
-  <button mat-icon-button>
-    <mat-icon>favorite</mat-icon>
-  </button>
-  <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-    <mat-icon>share</mat-icon>
+  <button mat-icon-button (click)="toggleEditMode()">
+    <mat-icon>{{isEditMode ? 'visibility' : 'edit'}}</mat-icon>
   </button>
 </mat-toolbar>
 

@@ -12,3 +12,13 @@ export const pageListSize = createSelector(
   selectFeature,
   (state: ViewState) => state.pageListSize,
 );
+
+export const getStartScrollTimestamp = createSelector(
+  selectFeature,
+  (state: ViewState) => state.startScrollTimestamp,
+);
+
+export const getIsEditMode = createSelector(
+  selectFeature,
+  (state: ViewState) => state.isEditMode,
+);

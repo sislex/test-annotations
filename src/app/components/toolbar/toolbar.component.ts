@@ -19,11 +19,13 @@ import {AsyncPipe} from "@angular/common";
   styleUrl: './toolbar.component.scss'
 })
 export class ToolbarComponent {
-  @Output() emitter = new EventEmitter();
-  @Input() percentInputValue: number | null = 50;
   @Input() title: string | null = '';
+  @Input() percentInputValue: number | null = 50;
   @Input() totalPages: number | null = 0;
   @Input() activePage: number | null = 0;
+  @Input() isEditMode: boolean | null = false;
+
+  @Output() emitter = new EventEmitter();
 
   increment() {
     this.emitter.emit({
@@ -48,12 +50,18 @@ export class ToolbarComponent {
     this.emitter.emit({
       event: 'ToolbarComponent:FIRST_INPUT_CHANGE',
       data: $event
-    })
+    });
     } else if (note === 'second') {
       this.emitter.emit({
         event: 'ToolbarComponent:SECOND_INPUT_CHANGE',
         data: $event
-      })
+      });
     }
+  }
+
+  toggleEditMode() {
+    this.emitter.emit({
+      event: 'ToolbarComponent:TOGGLE_EDIT_MODE',
+    });
   }
 }

@@ -1,17 +1,10 @@
-export function scrollToElementPage(id: string) {
+export function scrollToElementPage(id: string, behavior: 'smooth' | 'auto' = 'smooth' ) {
   if (document) {
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({behavior: 'smooth'});
+      element.scrollIntoView({behavior});
     }
   }
 }
 
-export function scrollToElementThumbnail(id: string) {
-  if (document) {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({behavior: 'smooth'});
-    }
-  }
-}
+

@@ -6,10 +6,10 @@ import {Store} from "@ngrx/store";
 import {
   decreasePageListSize,
   increasePageListSize,
-  setSizePage,
+  setSizePage, toggleIsEditMode,
   toggleIsThumbnailListOpened
-} from "../../+state/view/view.actions";
-import {pageListSize} from "../../+state/view/view.selectors";
+} from '../../+state/view/view.actions';
+import {getIsEditMode, pageListSize} from '../../+state/view/view.selectors';
 import {AsyncPipe} from "@angular/common";
 import {ActivatedRoute} from '@angular/router';
 import {loadDocument, setActivePage} from "../../+state/document/document.actions";
@@ -34,6 +34,7 @@ export class DocumentContainerComponent implements OnInit {
   pageListSize$ = this.store.select(pageListSize);
   totalPages$ = this.store.select(getTotalPages);
   activePage$ = this.store.select(getActivePage);
+  getIsEditMode$ = this.store.select(getIsEditMode);
 
   constructor(
     private store: Store,
@@ -62,12 +63,13 @@ export class DocumentContainerComponent implements OnInit {
         this.store.dispatch(setActivePage({activePageNumber: parsedValue}));
         scrollToElementPage('page-' + parsedValue.toString());
       }
-    }
-    else if ($event.event === 'ToolbarComponent:SECOND_INPUT_CHANGE') {
-      const parsedValue = Number.parseInt($event.data, 10); // Преобразуем $event.data в число
+    } else if ($event.event === 'ToolbarComponent:SECOND_INPUT_CHANGE') {
+      const parsedValue = Number.parseInt($event.data, 10);
       if (!isNaN(parsedValue)) {
         this.store.dispatch(setSizePage({ pageSize: parsedValue }));
       }
+    } else if ($event.event === 'ToolbarComponent:TOGGLE_EDIT_MODE') {
+      this.store.dispatch(toggleIsEditMode())
     }
   }
 

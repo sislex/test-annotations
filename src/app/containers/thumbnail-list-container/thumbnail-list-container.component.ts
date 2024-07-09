@@ -5,6 +5,7 @@ import {getActiveDocumentPages, getActivePage} from "../../+state/document/docum
 import {AsyncPipe} from "@angular/common";
 import {setActivePage} from "../../+state/document/document.actions";
 import {scrollToElementPage} from "../../helpers/scrollToElement";
+import {setStartScrollTimestamp} from '../../+state/view/view.actions';
 
 @Component({
   selector: 'app-thumbnail-list-container',
@@ -26,8 +27,9 @@ export class ThumbnailListContainerComponent {
 
   events(event$: any) {
     if (event$.event === 'ThumbnailComponent:OBJECT_CLICKED') {
-      const activePageNumber = event$.data.number
-      this.store.dispatch(setActivePage({activePageNumber}))
+      const activePageNumber = event$.data.number;
+      this.store.dispatch(setStartScrollTimestamp());
+      this.store.dispatch(setActivePage({activePageNumber}));
       scrollToElementPage('page-' + activePageNumber.toString());
     }
   }

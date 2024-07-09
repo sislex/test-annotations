@@ -16,3 +16,16 @@ export const setSizePage = createAction(
   '[View] setSizePage',
   props<{ pageSize: number }>()
 );
+
+export const setStartScrollTimestamp = createAction(
+  '[View] setStartScrollTimestamp',
+);
+
+export const scrollPageList = createAction(
+  '[View] scrollPageList',
+  props<{ activeItem: number }>()
+);
+
+export const toggleIsEditMode = createAction(
+  '[View] toggleIsEditMode',
+);

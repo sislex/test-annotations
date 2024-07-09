@@ -6,12 +6,12 @@
   box-sizing: border-box;
   padding-top: 8px;
 
-  //.page {
-  //  width: 50%;
+  .page {
+    transition: width 0.2s ease;
 
     img {
       width: 100%;
     }
-  //}
+  }
 
 }

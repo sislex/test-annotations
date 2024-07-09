@@ -28,7 +28,7 @@ export class DocumentEffects {
       ofType(DocumentActions.setActiveScrollPage),
       concatLatestFrom(() => this.store.select(getActivePage)),
       tap(([{activePageNumber}, getActivePage]) => {
-        if (activePageNumber != getActivePage) {
+        if (activePageNumber !== getActivePage) {
           this.store.dispatch(setActivePage({activePageNumber}))
         }
       })
