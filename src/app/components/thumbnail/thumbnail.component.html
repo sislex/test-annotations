@@ -1,6 +1,6 @@
-<div class="thumbnail" [ngClass]="{'selected': page.number === selectedPageNumber}">
+<div class="thumbnail" id="thumbnail-{{page.number}}" [ngClass]="{'selected': page.number === selectedPageNumber}">
   <a (click)="objectSelected(page.number)">
-    <img [src]="page.imageUrl" />
+    <img [src]="page.imageUrl" alt=""/>
   </a>
 </div>
 

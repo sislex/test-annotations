@@ -8,6 +8,7 @@
 
   .thumbnail {
     width: 50%;
+    border: 6px solid #323639;
 
     img {
       width: 100%;
@@ -15,8 +16,6 @@
   }
 
   .thumbnail.selected {
-    border: 6px solid #5757bd;
+    border: 6px solid #8ab4f8;
   }
-
-
 }

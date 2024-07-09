@@ -15,4 +15,9 @@ export const setActivePage = createAction(
   props<{ activePageNumber: number }>()
 );
 
+export const setActiveScrollPage = createAction(
+  '[Document] setActivePage',
+  props<{ activePageNumber: number }>()
+);
+
 

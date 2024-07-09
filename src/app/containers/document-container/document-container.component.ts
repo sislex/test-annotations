@@ -14,7 +14,7 @@ import {AsyncPipe} from "@angular/common";
 import {ActivatedRoute} from '@angular/router';
 import {loadDocument, setActivePage} from "../../+state/document/document.actions";
 import {getActiveDocumentName, getActivePage, getTotalPages} from "../../+state/document/document.selectors";
-import {scrollToElement} from "../../helpers/scrollToElement";
+import {scrollToElementPage} from "../../helpers/scrollToElement";
 
 @Component({
   selector: 'app-document-container',
@@ -60,7 +60,7 @@ export class DocumentContainerComponent implements OnInit {
       const parsedValue = Number.parseInt($event.data, 10); // Преобразуем $event.data в число
       if (!isNaN(parsedValue)) {
         this.store.dispatch(setActivePage({activePageNumber: parsedValue}));
-        scrollToElement('page-' + parsedValue.toString());
+        scrollToElementPage('page-' + parsedValue.toString());
       }
     }
     else if ($event.event === 'ToolbarComponent:SECOND_INPUT_CHANGE') {

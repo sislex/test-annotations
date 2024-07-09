@@ -4,7 +4,7 @@ import {Store} from "@ngrx/store";
 import {getActiveDocumentPages, getActivePage} from "../../+state/document/document.selectors";
 import {AsyncPipe} from "@angular/common";
 import {setActivePage} from "../../+state/document/document.actions";
-import {scrollToElement} from "../../helpers/scrollToElement";
+import {scrollToElementPage} from "../../helpers/scrollToElement";
 
 @Component({
   selector: 'app-thumbnail-list-container',
@@ -28,7 +28,7 @@ export class ThumbnailListContainerComponent {
     if (event$.event === 'ThumbnailComponent:OBJECT_CLICKED') {
       const activePageNumber = event$.data.number
       this.store.dispatch(setActivePage({activePageNumber}))
-      scrollToElement('page-' + activePageNumber.toString());
+      scrollToElementPage('page-' + activePageNumber.toString());
     }
   }
 }
