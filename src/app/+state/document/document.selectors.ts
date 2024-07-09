@@ -17,3 +17,14 @@ export const getActiveDocumentPages = createSelector(
   getActiveDocument,
   (activeDocument: IDocument | null) => activeDocument ? activeDocument.pages : [],
 );
+
+export const getTotalPages = createSelector(
+  getActiveDocument,
+  (activeDocument: IDocument | null) => activeDocument ? activeDocument.pages.length : 0,
+);
+
+
+export const getActivePage = createSelector(
+  selectFeature,
+  (state: DocumentState) => state.activePage,
+);

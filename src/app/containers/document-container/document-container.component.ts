@@ -3,12 +3,18 @@ import {DocumentLayoutComponent} from '../../layouts/document-layout/document-la
 import {ToolbarComponent} from '../../components/toolbar/toolbar.component';
 import {SidenavContainerComponent} from '../sidenav-container/sidenav-container.component';
 import {Store} from "@ngrx/store";
-import {decreasePageListSize, increasePageListSize, toggleIsThumbnailListOpened} from "../../+state/view/view.actions";
+import {
+  decreasePageListSize,
+  increasePageListSize,
+  setSizePage,
+  toggleIsThumbnailListOpened
+} from "../../+state/view/view.actions";
 import {pageListSize} from "../../+state/view/view.selectors";
 import {AsyncPipe} from "@angular/common";
 import {ActivatedRoute} from '@angular/router';
-import {loadDocument} from "../../+state/document/document.actions";
-import {getActiveDocumentName} from "../../+state/document/document.selectors";
+import {loadDocument, setActivePage} from "../../+state/document/document.actions";
+import {getActiveDocumentName, getActivePage, getTotalPages} from "../../+state/document/document.selectors";
+import {scrollToElement} from "../../helpers/scrollToElement";
 
 @Component({
   selector: 'app-document-container',
@@ -26,12 +32,13 @@ export class DocumentContainerComponent implements OnInit {
 
   activeDocumentName$ = this.store.select(getActiveDocumentName);
   pageListSize$ = this.store.select(pageListSize);
+  totalPages$ = this.store.select(getTotalPages);
+  activePage$ = this.store.select(getActivePage);
 
   constructor(
     private store: Store,
     private route: ActivatedRoute
-  ) {
-  }
+  ) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -49,6 +56,20 @@ export class DocumentContainerComponent implements OnInit {
       this.store.dispatch(increasePageListSize())
     } else if ($event.event === 'ToolbarComponent:DECREMENT_CLICKED') {
       this.store.dispatch(decreasePageListSize())
+    } else if ($event.event === 'ToolbarComponent:FIRST_INPUT_CHANGE') {
+      const parsedValue = Number.parseInt($event.data, 10); // Преобразуем $event.data в число
+      if (!isNaN(parsedValue)) {
+        this.store.dispatch(setActivePage({activePageNumber: parsedValue}));
+        scrollToElement('page-' + parsedValue.toString());
+      }
+    }
+    else if ($event.event === 'ToolbarComponent:SECOND_INPUT_CHANGE') {
+      const parsedValue = Number.parseInt($event.data, 10); // Преобразуем $event.data в число
+      if (!isNaN(parsedValue)) {
+        this.store.dispatch(setSizePage({ pageSize: parsedValue }));
+      }
     }
   }
+
+
 }

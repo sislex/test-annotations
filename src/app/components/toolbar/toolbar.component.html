@@ -6,17 +6,17 @@
     (click)="toggleSidenav()">
     <mat-icon>menu</mat-icon>
   </button>
-  <span>{{ title }}</span>
+  <span class="title">{{ title }}</span>
   <span class="example-spacer"></span>
-  <input type="text" [(ngModel)]="firstInputValue" class="page-width-input"/>
-  <span class="separator">/</span> {{ stateString }}
+  <input type="text" [(ngModel)]="activePage" (ngModelChange)="inputValue($event, 'first')" class="page-width-input"/>
+  <span class="separator">/</span>
+  {{ totalPages }}
   <div class="vertical-line"></div>
   <button mat-icon-button (click)="decrement()">
     <mat-icon class="butt-size">remove</mat-icon>
   </button>
 
-  <input type="text" [(ngModel)]="percentInputValue" class="size-pages-width-input"/>
-
+  <input type="text" [(ngModel)]="percentInputValue" (ngModelChange)="inputValue($event, 'second')" class="size-pages-width-input"/>
   <button mat-icon-button (click)="increment()">
     <mat-icon class="butt-size">add</mat-icon>
   </button>

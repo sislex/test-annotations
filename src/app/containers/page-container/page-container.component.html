@@ -1,5 +1,3 @@
-<div id="page-{{page.number}}" class="page">
+<div id="page-{{page.number}}" class="page" [ngStyle]="{ 'width': (width$ | async) + '%'}">
   <img [src]="page.imageUrl"/>
 </div>
-
-

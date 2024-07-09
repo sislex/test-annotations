@@ -6,8 +6,13 @@ export const loadDocument = createAction(
 );
 
 export const loadDocumentSuccess = createAction(
-  '[Document] LoadDocumentSuccess',
+  '[Document] loadDocumentSuccess',
   props<{ document: any }>()
+);
+
+export const setActivePage = createAction(
+  '[Document] setActivePage',
+  props<{ activePageNumber: number }>()
 );
 
 

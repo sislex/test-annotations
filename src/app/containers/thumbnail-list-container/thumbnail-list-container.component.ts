@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import {ThumbnailComponent} from '../../components/thumbnail/thumbnail.component';
 import {Store} from "@ngrx/store";
-import {getActiveDocumentPages} from "../../+state/document/document.selectors";
+import {getActiveDocumentPages, getActivePage} from "../../+state/document/document.selectors";
 import {AsyncPipe} from "@angular/common";
+import {setActivePage} from "../../+state/document/document.actions";
+import {scrollToElement} from "../../helpers/scrollToElement";
 
 @Component({
   selector: 'app-thumbnail-list-container',
@@ -16,8 +18,17 @@ import {AsyncPipe} from "@angular/common";
 })
 export class ThumbnailListContainerComponent {
   activeDocumentPages$ = this.store.select(getActiveDocumentPages);
+  selectedPageNumber$ = this.store.select(getActivePage);
 
   constructor(
     private store: Store,
   ) {}
+
+  events(event$: any) {
+    if (event$.event === 'ThumbnailComponent:OBJECT_CLICKED') {
+      const activePageNumber = event$.data.number
+      this.store.dispatch(setActivePage({activePageNumber}))
+      scrollToElement('page-' + activePageNumber.toString());
+    }
+  }
 }

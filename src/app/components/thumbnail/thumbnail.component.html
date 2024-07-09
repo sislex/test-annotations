@@ -1,5 +1,5 @@
-<div class="thumbnail">
-  <a href="#page-{{page.number}}">
+<div class="thumbnail" [ngClass]="{'selected': page.number === selectedPageNumber}">
+  <a (click)="objectSelected(page.number)">
     <img [src]="page.imageUrl" />
   </a>
 </div>

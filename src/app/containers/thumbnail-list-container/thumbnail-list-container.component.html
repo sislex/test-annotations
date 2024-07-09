@@ -1,3 +1,7 @@
 @for (page of activeDocumentPages$|async; track page.number) {
-  <app-thumbnail [page]="page"></app-thumbnail>
+  <app-thumbnail
+    [page]="page"
+    (emitter)="events($event)"
+    [selectedPageNumber]="selectedPageNumber$|async">
+  </app-thumbnail>
 }

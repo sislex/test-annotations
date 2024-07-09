@@ -15,6 +15,7 @@ export interface IDocument {
 
 export interface DocumentState {
   activeDocument: IDocument | null;
+  activePage: number;
 }
 
 export interface CommandsListPartialState {
@@ -23,6 +24,7 @@ export interface CommandsListPartialState {
 
 export const initialState: DocumentState = {
   activeDocument: null,
+  activePage: 1,
 };
 
 export const documentReducer = createReducer(
@@ -30,4 +32,5 @@ export const documentReducer = createReducer(
   on(DocumentActions.loadDocumentSuccess, (state, { document }) => ({
     ...state,
     activeDocument: document })),
+  on(DocumentActions.setActivePage, (state, { activePageNumber }) => ({...state, activePage: activePageNumber })),
 );
