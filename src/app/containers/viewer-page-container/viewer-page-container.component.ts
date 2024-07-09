@@ -3,7 +3,8 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-viewer-page-container',
   standalone: true,
-  imports: [],
+  imports: [
+  ],
   templateUrl: './viewer-page-container.component.html',
   styleUrl: './viewer-page-container.component.scss'
 })

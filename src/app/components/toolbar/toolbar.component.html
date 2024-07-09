@@ -1,24 +1,31 @@
-<mat-toolbar>
+<mat-toolbar >
   <button
     mat-icon-button
     class="example-icon"
     aria-label="Example icon-button with menu icon"
-    (click)="toggleSidenav.emit()">
+    (click)="toggleSidenav()">
     <mat-icon>menu</mat-icon>
   </button>
-  <span>My App</span>
+  <span class="title">{{ title }}</span>
   <span class="example-spacer"></span>
-  <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-    <mat-icon>favorite</mat-icon>
+  <input type="text" [(ngModel)]="activePage" (ngModelChange)="inputValue($event, 'first')" class="page-width-input"/>
+  <span class="separator">/</span>
+  {{ totalPages }}
+  <div class="vertical-line"></div>
+  <button mat-icon-button (click)="decrement()">
+    <mat-icon class="butt-size">remove</mat-icon>
   </button>
-  <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-    <mat-icon>share</mat-icon>
+
+  <input type="text" [(ngModel)]="percentInputValue" (ngModelChange)="inputValue($event, 'second')" class="size-pages-width-input"/>
+  <button mat-icon-button (click)="increment()">
+    <mat-icon class="butt-size">add</mat-icon>
   </button>
   <span class="example-spacer"></span>
-  <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+  <button mat-icon-button>
     <mat-icon>favorite</mat-icon>
   </button>
   <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
     <mat-icon>share</mat-icon>
   </button>
 </mat-toolbar>
+

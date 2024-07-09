@@ -1,5 +1,11 @@
 <app-document-layout>
-  <app-toolbar (toggleSidenav)="onToggleSidenav()" top></app-toolbar>
-  <app-sidenav-container #sidenav bottom></app-sidenav-container>
+  <app-toolbar
+    [percentInputValue]="pageListSize$|async"
+    [title]="(activeDocumentName$|async)"
+    [totalPages]="totalPages$|async"
+    [activePage]="activePage$|async"
+    (emitter)="events($event)" top>
+  </app-toolbar>
+  <app-sidenav-container bottom></app-sidenav-container>
 </app-document-layout>
 
