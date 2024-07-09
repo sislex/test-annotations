@@ -1,3 +1,6 @@
-@for (page of activeDocumentPages$|async; track page.number) {
-  <app-page-container [page]="page"></app-page-container>
-}
+<div class="scroll-area" (scroll)="scroll($event)">
+  @for (page of activeDocumentPages$|async; track page.number) {
+    <app-page-container [page]="page"></app-page-container>
+  }
+</div>
+

@@ -11,6 +11,8 @@
 
   mat-sidenav-content {
     background-color: #525659;
+    overflow: hidden;
+    position: relative;
   }
 
   mat-sidenav-container {
