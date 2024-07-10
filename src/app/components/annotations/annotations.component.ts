@@ -10,11 +10,15 @@ import * as fabric from 'fabric';
 })
 export class AnnotationsComponent implements AfterViewInit {
   @Input() annotations: any[] | undefined = [];
+  @Input() addAnnotation: {type: string, config: any} | undefined;
 
   @ViewChild('wrapper', { static: true }) wrapperElement!: ElementRef<HTMLDivElement>;
   @ViewChild('canvas', { static: false }) canvasElement!: ElementRef<HTMLCanvasElement>;
   canvasWidth = 0;
   canvasHeight = 0;
+
+  mouseDownEvent = null;
+  mouseUoEvent = null;
 
   private canvas!: fabric.Canvas;
 
@@ -22,9 +26,6 @@ export class AnnotationsComponent implements AfterViewInit {
   constructor() {}
 
   ngAfterViewInit(): void {
-    console.log(this.annotations);
-
-
     setTimeout(() => { // Ждем, пока картинка загрузится
       this.canvasWidth = this.wrapperElement.nativeElement.clientWidth;
       this.canvasHeight = this.wrapperElement.nativeElement.clientHeight;
