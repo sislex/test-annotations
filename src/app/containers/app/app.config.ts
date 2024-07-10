@@ -12,6 +12,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { DOCUMENT_FEATURE_KEY, documentReducer } from "../../+state/document/document.reducer";
 import  {DocumentEffects } from "../../+state/document/document.effects";
 import {ViewEffects} from '../../+state/view/view.effects';
+import {ANNOTATION_FEATURE_KEY, annotationReducer} from "../../+state/annotation/annotation.reducer";
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -27,6 +28,7 @@ export const appConfig: ApplicationConfig = {
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
     provideState(VIEW_FEATURE_KEY, viewReducer),
     provideState(DOCUMENT_FEATURE_KEY, documentReducer),
+    provideState(ANNOTATION_FEATURE_KEY, annotationReducer),
     provideRouterStore()
   ]
 };

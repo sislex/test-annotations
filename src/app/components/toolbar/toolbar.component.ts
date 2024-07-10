@@ -24,6 +24,7 @@ export class ToolbarComponent {
   @Input() totalPages: number | null = 0;
   @Input() activePage: number | null = 0;
   @Input() isEditMode: boolean | null = false;
+  @Input() activeMode: string | null | undefined = null;
 
   @Output() emitter = new EventEmitter();
 
@@ -62,6 +63,13 @@ export class ToolbarComponent {
   toggleEditMode() {
     this.emitter.emit({
       event: 'ToolbarComponent:TOGGLE_EDIT_MODE',
+    });
+  }
+
+  toggleAdd(note: string) {
+    this.emitter.emit({
+      event: 'ToolbarComponent:TOGGLE_ADD',
+      note
     });
   }
 }

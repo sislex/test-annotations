@@ -21,8 +21,23 @@
     <mat-icon class="butt-size">add</mat-icon>
   </button>
   <span class="example-spacer"></span>
+  @if (isEditMode) {
+    <button mat-icon-button (click)="toggleAdd('text')">
+      <mat-icon [class.active]="activeMode === 'text'">title</mat-icon>
+    </button>
+    <button mat-icon-button (click)="toggleAdd('rect')">
+      <mat-icon [class.active]="activeMode === 'rect'">crop_din</mat-icon>
+    </button>
+    <button mat-icon-button (click)="toggleAdd('circle')">
+      <mat-icon [class.active]="activeMode === 'circle'">radio_button_unchecked</mat-icon>
+    </button>
+    <button mat-icon-button (click)="toggleAdd('img')">
+      <mat-icon [class.active]="activeMode === 'img'">image</mat-icon>
+    </button>
+  }
   <button mat-icon-button (click)="toggleEditMode()">
     <mat-icon>{{isEditMode ? 'visibility' : 'edit'}}</mat-icon>
   </button>
+
 </mat-toolbar>
 

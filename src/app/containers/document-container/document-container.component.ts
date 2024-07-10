@@ -15,6 +15,8 @@ import {ActivatedRoute} from '@angular/router';
 import {loadDocument, setActivePage} from "../../+state/document/document.actions";
 import {getActiveDocumentName, getActivePage, getTotalPages} from "../../+state/document/document.selectors";
 import {scrollToElementPage} from "../../helpers/scrollToElement";
+import {addAnnotation} from "../../+state/annotation/annotation.actions";
+import {getAddAnnotationType} from "../../+state/annotation/annotation.selectors";
 
 @Component({
   selector: 'app-document-container',
@@ -35,6 +37,7 @@ export class DocumentContainerComponent implements OnInit {
   totalPages$ = this.store.select(getTotalPages);
   activePage$ = this.store.select(getActivePage);
   getIsEditMode$ = this.store.select(getIsEditMode);
+  getAddAnnotationType$ = this.store.select(getAddAnnotationType);
 
   constructor(
     private store: Store,
@@ -70,6 +73,8 @@ export class DocumentContainerComponent implements OnInit {
       }
     } else if ($event.event === 'ToolbarComponent:TOGGLE_EDIT_MODE') {
       this.store.dispatch(toggleIsEditMode());
+    } else if ($event.event === 'ToolbarComponent:TOGGLE_ADD') {
+      this.store.dispatch(addAnnotation({annotation: {type: $event.note, settings: {fill: 'green'}}}));
     }
   }
 

@@ -5,6 +5,7 @@
     [totalPages]="totalPages$|async"
     [activePage]="activePage$|async"
     [isEditMode]="getIsEditMode$|async"
+    [activeMode]="getAddAnnotationType$|async"
     (emitter)="events($event)" top>
   </app-toolbar>
   <app-sidenav-container bottom></app-sidenav-container>
