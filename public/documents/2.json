@@ -5,17 +5,7 @@
       "number": 1,
       "imageUrl": "documents/1/1.avif",
       "annotations": [
-        {
-          "type": "rect",
-          "settings": {
-            "left": 10,
-            "top": 20,
-            "fill": "red",
-            "width": 10,
-            "height": 15,
-            "angle": 12
-          }
-        }
+
       ]
     },
     {
