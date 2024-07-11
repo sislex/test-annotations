@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 
 @Component({
   selector: 'app-viewer-page-container',
@@ -6,7 +6,8 @@ import { Component } from '@angular/core';
   imports: [
   ],
   templateUrl: './viewer-page-container.component.html',
-  styleUrl: './viewer-page-container.component.scss'
+  styleUrl: './viewer-page-container.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ViewerPageContainerComponent {
 

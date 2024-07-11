@@ -8,36 +8,36 @@
         {
           "type": "rect",
           "settings": {
+            "id": 1,
             "left": 10,
             "top": 20,
             "fill": "red",
             "width": 10,
             "height": 15,
-            "angle": 12,
-            "id": 1
+            "angle": 12
           }
         },
         {
           "type": "circle",
           "settings": {
+            "id": 2,
             "left": 50,
             "top": 50,
             "fill": "blue",
             "radius": 20,
-            "angle": 0,
-            "id": 2
+            "angle": 0
           }
         },
         {
           "type": "text",
           "settings": {
+            "id": 3,
             "left": 40,
             "top": 10,
             "fill": "black",
             "text": "Hello!",
             "fontSize": 5,
-            "angle": 0,
-            "id": 3
+            "angle": 0
           }
         }
       ]

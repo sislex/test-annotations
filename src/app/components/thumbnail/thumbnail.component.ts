@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
 import {IPage} from "../../+state/document/document.reducer";
 import {NgClass} from "@angular/common";
 
@@ -9,7 +9,8 @@ import {NgClass} from "@angular/common";
     NgClass
   ],
   templateUrl: './thumbnail.component.html',
-  styleUrl: './thumbnail.component.scss'
+  styleUrl: './thumbnail.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ThumbnailComponent {
   @Input() page!: IPage;

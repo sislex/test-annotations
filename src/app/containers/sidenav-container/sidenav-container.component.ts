@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {MatDrawerMode, MatSidenavModule} from '@angular/material/sidenav';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatButtonModule} from '@angular/material/button';
@@ -16,7 +16,8 @@ import {PageListContainerComponent} from "../page-list-container/page-list-conta
   imports: [MatSidenavModule, MatButtonModule, MatRadioModule, ThumbnailListContainerComponent, ViewerPageContainerComponent, AsyncPipe, PageListContainerComponent],
   providers: [{provide: FocusTrapFactory, useClass: ConfigurableFocusTrapFactory}],
   templateUrl: './sidenav-container.component.html',
-  styleUrl: './sidenav-container.component.scss'
+  styleUrl: './sidenav-container.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidenavContainerComponent {
   isThumbnailListOpened$ = this.store$.select(isThumbnailListOpened);

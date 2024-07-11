@@ -1,4 +1,13 @@
-import {AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy, ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild
+} from '@angular/core';
 import * as fabric from 'fabric';
 import {IAddAnnotation} from "../../+state/annotation/annotation.reducer";
 import {annotationRelativeToAbsolute} from '../../helpers/annotationRelativeToAbsolute';
@@ -9,7 +18,8 @@ import {annotationAbsoluteToRelative} from "../../helpers/annotationAbsoluteToRe
   standalone: true,
   imports: [],
   templateUrl: './annotations.component.html',
-  styleUrls: ['./annotations.component.scss']
+  styleUrls: ['./annotations.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnnotationsComponent implements AfterViewInit {
   @Input() annotations: any[] | undefined = [];
@@ -26,19 +36,24 @@ export class AnnotationsComponent implements AfterViewInit {
   private isDrawing = false;
   private startX = 0;
   private startY = 0;
-  private shape!: fabric.Rect | fabric.Textbox | fabric.Circle;
+  private shape!: fabric.Rect | fabric.Textbox | fabric.Circle | any;
 
-  constructor() {}
+  constructor(private cdr: ChangeDetectorRef) {}
 
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.canvasWidth = this.wrapperElement.nativeElement.clientWidth;
       this.canvasHeight = this.wrapperElement.nativeElement.clientHeight;
 
+      this.cdr.detectChanges();
+
       setTimeout(() => {
-        this.initFabric();
-        this.fabricEvents();
-        this.initAnnotations();
+        if (this.canvasElement) {
+          this.initFabric();
+          this.fabricEvents();
+          this.initAnnotations();
+          this.cdr.detectChanges();
+        }
       }, 0);
     }, 500);
   }
@@ -84,9 +99,18 @@ export class AnnotationsComponent implements AfterViewInit {
       if (options.target) {
         this.isDrawing = false;
       } else {
-        if (this.annotations && this.annotations.length > 0) {
-          const lastAnnotationId = this.annotations[this.annotations.length - 1].settings.id + 1;
-          console.log('Last annotation ID:', lastAnnotationId);
+        if (!this.annotations ) {
+          this.annotations = [];
+        }
+        if (this.annotations ) {
+          let lastAnnotationId = -1;
+          this.annotations.forEach((annotation) => {
+            if (annotation.settings.id > lastAnnotationId) {
+              lastAnnotationId = annotation.settings.id;
+            }
+          });
+
+          const annotationId = lastAnnotationId + 1;
           this.isDrawing = true;
 
           const pointer = fabricCanvas.getPointer(options.e);
@@ -95,16 +119,16 @@ export class AnnotationsComponent implements AfterViewInit {
 
           if (this.addAnnotation.type === 'rect') {
             this.shape = new fabric.Rect({
+              id: annotationId,
               left: this.startX,
               top: this.startY,
               fill: this.addAnnotation.settings.fill,
               width: 0,
               height: 0,
-              id: 1
             });
-            this.fabricCanvas.add(this.shape);
           } else if (this.addAnnotation.type === 'text') {
             this.shape = new fabric.Textbox('Введите текст', {
+              id: annotationId,
               left: this.startX,
               top: this.startY,
               width: 150,
@@ -113,20 +137,18 @@ export class AnnotationsComponent implements AfterViewInit {
               cornerColor: 'rgba(255, 0, 0, 0.8)',
               cornerSize: 6,
               transparentCorners: false,
-              id: 1
             });
-
-            this.fabricCanvas.add(this.shape);
           } else if (this.addAnnotation.type === 'circle') {
             this.shape = new fabric.Circle({
+              id: annotationId,
               left: this.startX,
               top: this.startY,
               radius: 1,
               fill: 'rgba(110, 1, 21)',
-              id: 1
             });
-            this.fabricCanvas.add(this.shape);
           }
+
+          this.fabricCanvas.add(this.shape);
         }
       }
     }
@@ -174,6 +196,7 @@ export class AnnotationsComponent implements AfterViewInit {
         });
         annotationAbsolut.type = 'rect';
         annotationAbsolut.settings = {
+          id: this.shape.id,
           left: this.shape.left,
           top: this.shape.top,
           width: this.shape.width,
@@ -184,6 +207,7 @@ export class AnnotationsComponent implements AfterViewInit {
       } else if (this.addAnnotation.type === 'circle' && 'radius' in this.shape) {
         annotationAbsolut.type = 'circle';
         annotationAbsolut.settings = {
+          id: this.shape.id,
           left: this.shape.left,
           top: this.shape.top,
           radius: this.shape.radius,
@@ -193,6 +217,7 @@ export class AnnotationsComponent implements AfterViewInit {
       } else if (this.addAnnotation.type === 'text' && 'text' in this.shape && 'fontSize' in this.shape) {
         annotationAbsolut.type = 'text';
         annotationAbsolut.settings = {
+          id: this.shape.id,
           left: this.shape.left,
           top: this.shape.top,
           text: this.shape.text,
@@ -202,14 +227,15 @@ export class AnnotationsComponent implements AfterViewInit {
         };
       }
 
+      this.shape = null;
       this.isDrawing = false;
 
-      console.log(this.shape);
-
       this.emitter.emit({
-        event: 'AnnotationsComponent:ADD_SHAPE',
-        data: annotationAbsoluteToRelative(annotationAbsolut, this.canvasWidth, this.canvasHeight),
-        page: this.currentPage,
+        event: 'AnnotationsComponent:MODIFY_SHAPE',
+        data: {
+          annotation: annotationAbsoluteToRelative(annotationAbsolut, this.canvasWidth, this.canvasHeight),
+          page: this.currentPage,
+        },
       });
     }
   }
@@ -222,38 +248,43 @@ export class AnnotationsComponent implements AfterViewInit {
       if (shape.type === 'rect') {
         annotationAbsolut.type = 'rect';
         annotationAbsolut.settings = {
+          id: shape.id,
           left: shape.left,
           top: shape.top,
           width: shape.width * shape.scaleX,
           height: shape.height * shape.scaleY,
           fill: shape.fill,
-          angle: shape.angle
+          angle: shape.angle,
         };
       } else if (shape.type === 'circle') {
         annotationAbsolut.type = 'circle';
         annotationAbsolut.settings = {
+          id: shape.id,
           left: shape.left,
           top: shape.top,
           radius: shape.radius * shape.scaleX,
           fill: shape.fill,
-          angle: shape.angle
+          angle: shape.angle,
         };
-      } else if (shape.type === 'textbox') {
+      } else if (shape.text) {
         annotationAbsolut.type = 'text';
         annotationAbsolut.settings = {
+          id: shape.id,
           left: shape.left,
           top: shape.top,
           text: shape.text,
           fontSize: shape.fontSize,
           fill: shape.fill,
-          angle: shape.angle
+          angle: shape.angle,
         };
       }
 
       this.emitter.emit({
         event: 'AnnotationsComponent:MODIFY_SHAPE',
-        data: annotationAbsoluteToRelative(annotationAbsolut, this.canvasWidth, this.canvasHeight),
-        page: this.currentPage,
+        data: {
+          annotation: annotationAbsoluteToRelative(annotationAbsolut, this.canvasWidth, this.canvasHeight),
+          page: this.currentPage,
+        },
       });
     }
   }

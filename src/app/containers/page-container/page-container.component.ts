@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import {IPage} from "../../+state/document/document.reducer";
 import {AsyncPipe, NgStyle} from "@angular/common";
 import {Store} from "@ngrx/store";
@@ -14,7 +14,8 @@ import {AnnotationsContainerComponent} from '../annotations-container/annotation
     AnnotationsContainerComponent
   ],
   templateUrl: './page-container.component.html',
-  styleUrl: './page-container.component.scss'
+  styleUrl: './page-container.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PageContainerComponent {
   @Input() page!: IPage;

@@ -5,8 +5,8 @@ export const loadDocument = createAction(
   props<{ id: any }>()
 );
 
-export const loadDocumentSuccess = createAction(
-  '[Document] loadDocumentSuccess',
+export const setDocument = createAction(
+  '[Document] setDocument',
   props<{ document: any }>()
 );
 
@@ -20,8 +20,8 @@ export const setActiveScrollPage = createAction(
   props<{ activePageNumber: number }>()
 );
 
-export const saveAnnotation = createAction(
-  '[Annotation] saveAnnotation',
+export const editAnnotation = createAction(
+  '[Annotation] editAnnotation',
   props<{ annotation: { type: string, settings: any }, pageNumber: number }>()
 );
 

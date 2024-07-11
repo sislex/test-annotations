@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import { PageContainerComponent } from "../page-container/page-container.component";
 import { getActiveDocumentPages } from "../../+state/document/document.selectors";
 import { Store } from "@ngrx/store";
@@ -14,7 +14,8 @@ import {scrollPageList} from '../../+state/view/view.actions';
     AsyncPipe
   ],
   templateUrl: './page-list-container.component.html',
-  styleUrls: ['./page-list-container.component.scss']
+  styleUrls: ['./page-list-container.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PageListContainerComponent {
   activeDocumentPages$ = this.store.select(getActiveDocumentPages);

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {DocumentLayoutComponent} from '../../layouts/document-layout/document-layout.component';
 import {ToolbarComponent} from '../../components/toolbar/toolbar.component';
 import {SidenavContainerComponent} from '../sidenav-container/sidenav-container.component';
@@ -28,7 +28,8 @@ import {getAddAnnotationType} from "../../+state/annotation/annotation.selectors
     AsyncPipe,
   ],
   templateUrl: './document-container.component.html',
-  styleUrl: './document-container.component.scss'
+  styleUrl: './document-container.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DocumentContainerComponent implements OnInit {
 

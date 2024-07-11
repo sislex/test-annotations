@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {ThumbnailComponent} from '../../components/thumbnail/thumbnail.component';
 import {Store} from "@ngrx/store";
 import {getActiveDocumentPages, getActivePage} from "../../+state/document/document.selectors";
@@ -15,7 +15,8 @@ import {setStartScrollTimestamp} from '../../+state/view/view.actions';
     AsyncPipe
   ],
   templateUrl: './thumbnail-list-container.component.html',
-  styleUrl: './thumbnail-list-container.component.scss'
+  styleUrl: './thumbnail-list-container.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ThumbnailListContainerComponent {
   activeDocumentPages$ = this.store.select(getActiveDocumentPages);

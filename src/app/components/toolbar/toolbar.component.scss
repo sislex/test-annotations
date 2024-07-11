@@ -1,6 +1,7 @@
 .example-spacer {
   flex: 1 1 auto;
 }
+
 mat-toolbar {
   background-color: #323639;
   color: white;
@@ -52,6 +53,12 @@ mat-toolbar {
 
   .active {
     color: #1ea7fd;
+  }
+
+  .edit-controls {
+    position: absolute;
+    right: 12px;
+    top:  12px;
   }
 }
 
