@@ -157,13 +157,27 @@ export class AnnotationsComponent implements AfterViewInit {
 
   mouseUp() {
     if (this.addAnnotation && this.isDrawing) {
+      const annotationAbsolut: any = {};
       if (this.addAnnotation.type === 'rect') {
         this.shape.set({
           fill: this.addAnnotation.settings.fill,
         });
+        annotationAbsolut.type = 'rect';
+        annotationAbsolut.settings = {
+          left: this.shape.left,
+          top: this.shape.top,
+          width: this.shape.width,
+          height: this.shape.height,
+          fill: this.shape.fill,
+        };
+
+
       }
       this.isDrawing = false;
       console.log(this.shape);
+
+      // this.emitter.emit({event: '...', data:  annotationAbsoluteToRelative(annotationAbsolut)});
+
     }
   }
 
