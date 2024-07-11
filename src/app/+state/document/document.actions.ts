@@ -20,4 +20,9 @@ export const setActiveScrollPage = createAction(
   props<{ activePageNumber: number }>()
 );
 
+export const saveAnnotation = createAction(
+  '[Annotation] saveAnnotation',
+  props<{ annotation: { type: string, settings: any }, pageNumber: number }>()
+);
+
 

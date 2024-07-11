@@ -31,12 +31,9 @@
     <button mat-icon-button (click)="toggleAdd('circle')">
       <mat-icon [class.active]="activeMode === 'circle'">radio_button_unchecked</mat-icon>
     </button>
-    <button mat-icon-button (click)="toggleAdd('img')">
-      <mat-icon [class.active]="activeMode === 'img'">image</mat-icon>
-    </button>
   }
   <button mat-icon-button (click)="toggleEditMode()">
-    <mat-icon>{{isEditMode ? 'visibility' : 'edit'}}</mat-icon>
+    <mat-icon>{{isEditMode ? 'visibility_off' : 'visibility'}}</mat-icon>
   </button>
 
 </mat-toolbar>

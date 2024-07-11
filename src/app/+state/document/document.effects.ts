@@ -24,15 +24,15 @@ export class DocumentEffects {
   );
 
   setActiveScrollPage$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(DocumentActions.setActiveScrollPage),
-      concatLatestFrom(() => this.store.select(getActivePage)),
-      tap(([{activePageNumber}, getActivePage]) => {
-        if (activePageNumber !== getActivePage) {
-          this.store.dispatch(setActivePage({activePageNumber}))
-        }
-      })
-    ),
+      this.actions$.pipe(
+        ofType(DocumentActions.setActiveScrollPage),
+        concatLatestFrom(() => this.store.select(getActivePage)),
+        tap(([{activePageNumber}, getActivePage]) => {
+          if (activePageNumber !== getActivePage) {
+            this.store.dispatch(setActivePage({activePageNumber}))
+          }
+        })
+      ),
     {
       dispatch: false,
     }

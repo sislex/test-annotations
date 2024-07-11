@@ -1,1 +1,6 @@
-<app-annotations [annotations]="page.annotations" [addAnnotation]="getAddAnnotation$|async"></app-annotations>
+<app-annotations
+  [annotations]="page.annotations"
+  [addAnnotation]="getAddAnnotation$|async"
+  [currentPage]="page.number"
+  (emitter)="events($event)">
+</app-annotations>

@@ -4,6 +4,8 @@ import {IPage} from '../../+state/document/document.reducer';
 import {Store} from "@ngrx/store";
 import {getAddAnnotation} from "../../+state/annotation/annotation.selectors";
 import {AsyncPipe} from "@angular/common";
+import {addAnnotation} from "../../+state/annotation/annotation.actions";
+import {saveAnnotation} from "../../+state/document/document.actions";
 
 @Component({
   selector: 'app-annotations-container',
@@ -23,4 +25,10 @@ export class AnnotationsContainerComponent {
   constructor(
     private store: Store,
   ) {}
+
+  events($event: any){
+    this.store.dispatch(saveAnnotation({annotation: { type: $event.data.type, settings: $event.data.settings }, pageNumber: $event.page}));
+    console.log('Пришли значения', $event.data);
+    this.store.dispatch(addAnnotation({annotation: null}));
+  }
 }

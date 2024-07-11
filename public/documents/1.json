@@ -13,7 +13,31 @@
             "fill": "red",
             "width": 10,
             "height": 15,
-            "angle": 12
+            "angle": 12,
+            "id": 1
+          }
+        },
+        {
+          "type": "circle",
+          "settings": {
+            "left": 50,
+            "top": 50,
+            "fill": "blue",
+            "radius": 20,
+            "angle": 0,
+            "id": 2
+          }
+        },
+        {
+          "type": "text",
+          "settings": {
+            "left": 40,
+            "top": 10,
+            "fill": "black",
+            "text": "Hello!",
+            "fontSize": 5,
+            "angle": 0,
+            "id": 3
           }
         }
       ]

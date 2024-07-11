@@ -3,7 +3,7 @@ import {IAddAnnotation} from "./annotation.reducer";
 
 export const addAnnotation = createAction(
   '[Annotation] addAnnotation',
-  props<{ annotation: IAddAnnotation }>()
+  props<{ annotation: IAddAnnotation | null }>()
 );
 
 

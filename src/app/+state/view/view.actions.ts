@@ -29,3 +29,8 @@ export const scrollPageList = createAction(
 export const toggleIsEditMode = createAction(
   '[View] toggleIsEditMode',
 );
+
+export const updatePageListSize = createAction(
+  '[View] updatePageListSize',
+  props<{ pageListSize: number }>()
+);
