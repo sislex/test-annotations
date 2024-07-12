@@ -4,11 +4,10 @@ import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {Store} from "@ngrx/store";
 import * as ViewActions from './view.actions';
 import {debounceTime, tap, withLatestFrom} from 'rxjs';
-import {getStartScrollTimestamp, pageListSize} from './view.selectors';
+import {getIsEditMode, getStartScrollTimestamp, pageListSize} from './view.selectors';
 import {getActiveDocumentPages, getActivePage} from '../document/document.selectors';
 import {setActiveScrollPage} from '../document/document.actions';
 import {scrollToElementPage} from '../../helpers/scrollToElement';
-import {concatLatestFrom} from '@ngrx/operators';
 
 
 @Injectable()
@@ -17,8 +16,11 @@ export class ViewEffects {
   increasePageListSize$ = createEffect(() =>
       this.actions$.pipe(
         ofType(ViewActions.increasePageListSize),
-        concatLatestFrom(() => this.store.select(pageListSize)),
-        tap(([{}, pageListSize]) => {
+        withLatestFrom(
+          this.store.select(pageListSize),
+          this.store.select(getIsEditMode),
+        ),
+        tap(([{}, pageListSize, isEditMode]) => {
           const maxPageListSize = 200;
           const minPageListSize = 10;
           const newPageListSize = pageListSize + 10;
@@ -30,6 +32,13 @@ export class ViewEffects {
               : newPageListSize;
 
           this.store.dispatch(ViewActions.updatePageListSize({ pageListSize: adjustedPageListSize }));
+
+          if (isEditMode) {
+            this.store.dispatch(ViewActions.setReadMode());
+            setTimeout(() => {
+              this.store.dispatch(ViewActions.setEditMode());
+            }, 200);
+          }
         })
       ),
     {
@@ -40,8 +49,11 @@ export class ViewEffects {
   decreasePageListSize$ = createEffect(() =>
       this.actions$.pipe(
         ofType(ViewActions.decreasePageListSize),
-        concatLatestFrom(() => this.store.select(pageListSize)),
-        tap(([{}, pageListSize]) => {
+        withLatestFrom(
+          this.store.select(pageListSize),
+          this.store.select(getIsEditMode),
+        ),
+        tap(([{}, pageListSize, isEditMode]) => {
           const maxPageListSize = 200;
           const minPageListSize = 10;
           const newPageListSize = pageListSize - 10;
@@ -53,6 +65,13 @@ export class ViewEffects {
               : newPageListSize;
 
           this.store.dispatch(ViewActions.updatePageListSize({ pageListSize: adjustedPageListSize }));
+
+          if (isEditMode) {
+            this.store.dispatch(ViewActions.setReadMode());
+            setTimeout(() => {
+              this.store.dispatch(ViewActions.setEditMode());
+            }, 200);
+          }
         })
       ),
     {
@@ -60,6 +79,46 @@ export class ViewEffects {
     }
   );
 
+  setSizePage$ = createEffect(() =>
+      this.actions$.pipe(
+        ofType(ViewActions.setSizePage),
+        withLatestFrom(
+          this.store.select(getIsEditMode),
+        ),
+        tap(([{pageSize}, isEditMode]) => {
+          this.store.dispatch(ViewActions.updatePageListSize({ pageListSize: pageSize }));
+          if (isEditMode) {
+            this.store.dispatch(ViewActions.setReadMode());
+            setTimeout(() => {
+              this.store.dispatch(ViewActions.setEditMode());
+            }, 200);
+          }
+        })
+      ),
+    {
+      dispatch: false,
+    }
+  );
+
+  toggleIsThumbnailListOpened$ = createEffect(() =>
+      this.actions$.pipe(
+        ofType(ViewActions.toggleIsThumbnailListOpened),
+        withLatestFrom(
+          this.store.select(getIsEditMode),
+        ),
+        tap(([{}, isEditMode]) => {
+          if (isEditMode) {
+            this.store.dispatch(ViewActions.setReadMode());
+            setTimeout(() => {
+              this.store.dispatch(ViewActions.setEditMode());
+            }, 200);
+          }
+        })
+      ),
+    {
+      dispatch: false,
+    }
+  );
 
   scrollPageList$ = createEffect(() =>
       this.actions$.pipe(
@@ -79,25 +138,6 @@ export class ViewEffects {
               scrollToElementPage('thumbnail-' + activePageNumber.toString());
             }
           }
-        })
-      ),
-    {
-      dispatch: false,
-    }
-  );
-
-  resetCanvas$ = createEffect(() =>
-      this.actions$.pipe(
-        ofType(
-          ViewActions.toggleIsThumbnailListOpened,
-          ViewActions.increasePageListSize,
-          ViewActions.decreasePageListSize,
-          ViewActions.setSizePage),
-        tap(() => {
-          this.store.dispatch(ViewActions.toggleIsEditMode());
-          setTimeout(() => {
-            this.store.dispatch(ViewActions.toggleIsEditMode());
-          }, 200);
         })
       ),
     {

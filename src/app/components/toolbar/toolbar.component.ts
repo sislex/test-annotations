@@ -64,6 +64,7 @@ export class ToolbarComponent {
   toggleEditMode() {
     this.emitter.emit({
       event: 'ToolbarComponent:TOGGLE_EDIT_MODE',
+      data: this.isEditMode
     });
   }
 

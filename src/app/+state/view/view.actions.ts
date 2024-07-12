@@ -26,8 +26,12 @@ export const scrollPageList = createAction(
   props<{ activeItem: number }>()
 );
 
-export const toggleIsEditMode = createAction(
-  '[View] toggleIsEditMode',
+export const setEditMode = createAction(
+  '[View] setEditMode',
+);
+
+export const setReadMode = createAction(
+  '[View] setReadMode',
 );
 
 export const updatePageListSize = createAction(

@@ -6,7 +6,9 @@ import {Store} from "@ngrx/store";
 import {
   decreasePageListSize,
   increasePageListSize,
-  setSizePage, toggleIsEditMode,
+  setEditMode,
+  setReadMode,
+  setSizePage,
   toggleIsThumbnailListOpened
 } from '../../+state/view/view.actions';
 import {getIsEditMode, pageListSize} from '../../+state/view/view.selectors';
@@ -73,7 +75,11 @@ export class DocumentContainerComponent implements OnInit {
         this.store.dispatch(setSizePage({ pageSize: parsedValue }));
       }
     } else if ($event.event === 'ToolbarComponent:TOGGLE_EDIT_MODE') {
-      this.store.dispatch(toggleIsEditMode());
+      if ($event.data === true) {
+        this.store.dispatch(setReadMode());
+      } else if ($event.data === false) {
+        this.store.dispatch(setEditMode());
+      }
     } else if ($event.event === 'ToolbarComponent:TOGGLE_ADD') {
       this.store.dispatch(addAnnotation({annotation: {type: $event.note, settings: {fill: 'green'}}}));
     }

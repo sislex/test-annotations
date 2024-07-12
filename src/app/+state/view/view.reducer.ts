@@ -25,16 +25,16 @@ export const viewReducer = createReducer(
   initialState,
   on (ViewActions.toggleIsThumbnailListOpened, (state) => ({...state, isThumbnailListOpened: !state.isThumbnailListOpened })),
   on (ViewActions.updatePageListSize, (state, {pageListSize}) => ({...state, pageListSize })),
-  on(ViewActions.setSizePage, (state, { pageSize }) => ({
-    ...state,
-    pageListSize: pageSize,
-  })),
   on(ViewActions.setStartScrollTimestamp, (state) => ({
     ...state,
     startScrollTimestamp: new Date().getTime(),
   })),
-  on(ViewActions.toggleIsEditMode, (state) => ({
+  on(ViewActions.setReadMode, (state) => ({
     ...state,
-    isEditMode: !state.isEditMode,
+    isEditMode: false,
+  })),
+  on(ViewActions.setEditMode, (state) => ({
+    ...state,
+    isEditMode: true,
   })),
 );
