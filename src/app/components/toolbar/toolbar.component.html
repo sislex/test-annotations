@@ -23,6 +23,9 @@
   <span class="example-spacer"></span>
   <div class="edit-controls">
     @if (isEditMode) {
+      <button mat-icon-button class="butt" (click)="toggleAdd('delete')">
+        <mat-icon>delete</mat-icon>
+      </button>
       <button mat-icon-button (click)="toggleAdd('text')">
         <mat-icon [class.active]="activeMode === 'text'">title</mat-icon>
       </button>

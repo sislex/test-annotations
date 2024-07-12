@@ -60,5 +60,10 @@ mat-toolbar {
     right: 12px;
     top:  12px;
   }
+  .butt {
+    &:active {
+    background-color: #1ea7fd;
+      }
+  }
 }
 

@@ -5,7 +5,7 @@ import {Store} from "@ngrx/store";
 import {getAddAnnotation} from "../../+state/annotation/annotation.selectors";
 import {AsyncPipe} from "@angular/common";
 import {addAnnotation} from "../../+state/annotation/annotation.actions";
-import {editAnnotation} from '../../+state/document/document.actions';
+import {deleteAnnotation, editAnnotation} from '../../+state/document/document.actions';
 
 @Component({
   selector: 'app-annotations-container',
@@ -31,6 +31,8 @@ export class AnnotationsContainerComponent {
     if ($event.event === 'AnnotationsComponent:MODIFY_SHAPE') {
       this.store.dispatch(editAnnotation({annotation: $event.data.annotation, pageNumber: $event.data.page}));
       this.store.dispatch(addAnnotation({annotation: null}));
+    } else if ($event.event === 'AnnotationsComponent:DELETE_SHAPE') {
+      this.store.dispatch(deleteAnnotation({annotation: $event.data.annotation, pageNumber: $event.data.page}));
     }
   }
 }

@@ -25,4 +25,8 @@ export const editAnnotation = createAction(
   props<{ annotation: { type: string, settings: any }, pageNumber: number }>()
 );
 
+export const deleteAnnotation = createAction(
+  '[Annotation] deleteAnnotation',
+  props<{ annotation: { type: string, settings: any }, pageNumber: number }>()
+);
 

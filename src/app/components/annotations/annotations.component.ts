@@ -12,6 +12,8 @@ import * as fabric from 'fabric';
 import {IAddAnnotation} from "../../+state/annotation/annotation.reducer";
 import {annotationRelativeToAbsolute} from '../../helpers/annotationRelativeToAbsolute';
 import {annotationAbsoluteToRelative} from "../../helpers/annotationAbsoluteToRelative";
+import {CanvasService} from "../../services/deleteAnnotation.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-annotations',
@@ -37,8 +39,14 @@ export class AnnotationsComponent implements AfterViewInit {
   private startX = 0;
   private startY = 0;
   private shape!: fabric.Rect | fabric.Textbox | fabric.Circle | any;
+  private deleteSubscription: Subscription;
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private canvasService: CanvasService
+  ) {
+    this.deleteSubscription = new Subscription();
+  }
 
   ngAfterViewInit(): void {
     setTimeout(() => {
@@ -49,6 +57,9 @@ export class AnnotationsComponent implements AfterViewInit {
 
       setTimeout(() => {
         if (this.canvasElement) {
+          this.deleteSubscription = this.canvasService.delete$.subscribe(() => {
+            this.deleteActiveObject();
+          });
           this.initFabric();
           this.fabricEvents();
           this.initAnnotations();
@@ -92,6 +103,7 @@ export class AnnotationsComponent implements AfterViewInit {
     this.fabricCanvas.on('mouse:move', (options) => this.mouseMove(options));
     this.fabricCanvas.on('mouse:up', () => this.mouseUp());
     this.fabricCanvas.on('object:modified', (options) => this.objectModified(options));
+    this.fabricCanvas.on('object:removed', (options) => this.objectDeleted(options));
   }
 
   mouseDown(options: any, fabricCanvas: fabric.Canvas = this.fabricCanvas) {
@@ -283,6 +295,49 @@ export class AnnotationsComponent implements AfterViewInit {
         event: 'AnnotationsComponent:MODIFY_SHAPE',
         data: {
           annotation: annotationAbsoluteToRelative(annotationAbsolut, this.canvasWidth, this.canvasHeight),
+          page: this.currentPage,
+        },
+      });
+    }
+  }
+
+  deleteActiveObject() {
+    const activeObject = this.fabricCanvas.getActiveObject();
+    if (activeObject) {
+      this.deleteObject(activeObject);
+    }
+  }
+
+  deleteObject(shape: fabric.Object) {
+    this.fabricCanvas.remove(shape);
+  }
+
+  objectDeleted(options: any) {
+    const shape = options.target;
+    if (shape) {
+      let annotationAbsolut: any = {};
+
+      if (shape.type === 'rect') {
+        annotationAbsolut.type = 'rect';
+        annotationAbsolut.settings = {
+          id: shape.id,
+        };
+      } else if (shape.type === 'circle') {
+        annotationAbsolut.type = 'circle';
+        annotationAbsolut.settings = {
+          id: shape.id,
+        };
+      } else if (shape.text) {
+        annotationAbsolut.type = 'text';
+        annotationAbsolut.settings = {
+          id: shape.id,
+        };
+      }
+
+      this.emitter.emit({
+        event: 'AnnotationsComponent:DELETE_SHAPE',
+        data: {
+          annotation: annotationAbsolut,
           page: this.currentPage,
         },
       });

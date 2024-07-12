@@ -19,6 +19,7 @@ import {getActiveDocumentName, getActivePage, getTotalPages} from "../../+state/
 import {scrollToElementPage} from "../../helpers/scrollToElement";
 import {addAnnotation} from "../../+state/annotation/annotation.actions";
 import {getAddAnnotationType} from "../../+state/annotation/annotation.selectors";
+import {CanvasService} from "../../services/deleteAnnotation.service";
 
 @Component({
   selector: 'app-document-container',
@@ -44,7 +45,8 @@ export class DocumentContainerComponent implements OnInit {
 
   constructor(
     private store: Store,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private canvasService: CanvasService
   ) { }
 
   ngOnInit() {
@@ -82,6 +84,9 @@ export class DocumentContainerComponent implements OnInit {
       }
     } else if ($event.event === 'ToolbarComponent:TOGGLE_ADD') {
       this.store.dispatch(addAnnotation({annotation: {type: $event.note, settings: {fill: 'green'}}}));
+      if ($event.note === 'delete') {
+          this.canvasService.triggerDelete();
+      }
     }
   }
 

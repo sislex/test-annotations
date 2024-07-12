@@ -79,6 +79,39 @@ export class DocumentEffects {
     }
   );
 
+  deleteAnnotation$ = createEffect(() =>
+      this.actions$.pipe(
+        ofType(DocumentActions.deleteAnnotation),
+        concatLatestFrom(() => this.store.select(getActiveDocument)),
+        tap(([{ annotation, pageNumber }, activeDocument]) => {
+          if (activeDocument) {
+            const annotations = activeDocument.pages.find((page) => page.number === pageNumber)?.annotations || [];
+
+            const newAnnotations = annotations.filter((a) => a.settings.id !== annotation.settings.id);
+
+            const document = {
+              ...activeDocument,
+              pages: activeDocument.pages.map((page) => {
+                if (page.number === pageNumber) {
+                  return {
+                    ...page,
+                    annotations: newAnnotations
+                  };
+                }
+                return page;
+              })
+            };
+
+            this.store.dispatch(DocumentActions.setDocument({ document }));
+          }
+        })
+      ),
+    {
+      dispatch: false,
+    }
+  );
+
+
   constructor(
     private actions$: Actions,
     private store: Store,

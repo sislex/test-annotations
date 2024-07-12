@@ -6,4 +6,3 @@ export const addAnnotation = createAction(
   props<{ annotation: IAddAnnotation | null }>()
 );
 
-
