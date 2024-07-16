@@ -138,6 +138,7 @@ export class AnnotationsComponent implements AfterViewInit {
               width: 0,
               height: 0,
             });
+            this.fabricCanvas.add(this.shape);
           } else if (this.addAnnotation.type === 'text') {
             this.shape = new fabric.Textbox('Введите текст', {
               id: annotationId,
@@ -150,6 +151,7 @@ export class AnnotationsComponent implements AfterViewInit {
               cornerSize: 6,
               transparentCorners: false,
             });
+            this.fabricCanvas.add(this.shape);
           } else if (this.addAnnotation.type === 'circle') {
             this.shape = new fabric.Circle({
               id: annotationId,
@@ -158,9 +160,24 @@ export class AnnotationsComponent implements AfterViewInit {
               radius: 1,
               fill: 'rgba(110, 1, 21)',
             });
-          }
+            this.fabricCanvas.add(this.shape);
+          } else if (this.addAnnotation.type === 'image') {
+            const imgObj = new Image();
+            imgObj.onload = () => {
+              this.shape = new fabric.Image(imgObj, {
+                id: annotationId,
+                left: this.startX,
+                top: this.startY,
+              });
 
-          this.fabricCanvas.add(this.shape);
+              console.log(this.shape);
+
+              this.fabricCanvas.add(this.shape);
+            }
+            imgObj.src = 'documents/1/5.webp';
+
+
+          }
         }
       }
     }
@@ -185,6 +202,7 @@ export class AnnotationsComponent implements AfterViewInit {
           }
 
           this.shape.setCoords();
+          this.fabricCanvas.renderAll();
         } else if (this.addAnnotation.type === 'circle') {
           const radius = Math.abs(pointer.x - this.startX) / 2;
           this.shape.set({
@@ -193,9 +211,10 @@ export class AnnotationsComponent implements AfterViewInit {
           });
 
           this.shape.setCoords();
+          this.fabricCanvas.renderAll();
         }
       }
-      this.fabricCanvas.renderAll();
+
     }
   }
 
@@ -242,13 +261,16 @@ export class AnnotationsComponent implements AfterViewInit {
       this.shape = null;
       this.isDrawing = false;
 
-      this.emitter.emit({
-        event: 'AnnotationsComponent:MODIFY_SHAPE',
-        data: {
-          annotation: annotationAbsoluteToRelative(annotationAbsolut, this.canvasWidth, this.canvasHeight),
-          page: this.currentPage,
-        },
-      });
+      if (this.addAnnotation.type !== 'image') {
+        this.emitter.emit({
+          event: 'AnnotationsComponent:MODIFY_SHAPE',
+          data: {
+            annotation: annotationAbsoluteToRelative(annotationAbsolut, this.canvasWidth, this.canvasHeight),
+            page: this.currentPage,
+          },
+        });
+      }
+
     }
   }
 
