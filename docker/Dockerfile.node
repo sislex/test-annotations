@@ -1,0 +1,17 @@
+# Используем официальный образ Node.js
+FROM node:20.15.1
+
+# Устанавливаем рабочую директорию
+WORKDIR /app
+
+# Устанавливаем serve
+RUN npm install -g serve
+
+# Копируем файлы проекта
+COPY ./dist/test-annotations/browser .
+
+# Открываем порт для Node.js
+EXPOSE 3000
+
+# Команда для запуска приложения
+CMD ["serve", "-s", ".", "-l", "3000"]

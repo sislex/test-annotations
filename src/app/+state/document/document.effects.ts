@@ -15,7 +15,7 @@ export class DocumentEffects {
     this.actions$.pipe(
       ofType(DocumentActions.loadDocument),
       mergeMap(action =>
-        this.http.get(`http://localhost:4200/documents/${action.id}.json` ).pipe(
+        this.http.get(`documents/${action.id}.json` ).pipe(
           map(document => DocumentActions.setDocument({ document }) )
         )
       )
